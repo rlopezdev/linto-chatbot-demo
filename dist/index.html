@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Linagora Chatbot demo</title>
+
+    <!-- jQuery library (served from Google) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
+
+    <!-- CHATOT -->
+    <script type="text/javascript" src="/assets/js/lib/lottie.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lib/linto.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lib/chatbot.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/chatbot.min.css">
+</head>
+
+<body>
+    <header class="flex row">
+        <div class="container flex row">
+            <div class="header-logo-container flex row">
+                <img src="/assets/img/logo-linagora.png" alt="logo linagora">
+            </div>
+
+            <nav class="header-nav flex1 flex row">
+                <a href="/">Accueil</a>
+                <a href="/demo/meeting-room">Salle de réunion</a>
+                <a href="/demo/coffee-machine">Machine à café</a>
+
+            </nav>
+        </div>
+    </header>
+    <div id="loading">
+        <img src="/assets/img/Spin-1s-200px.gif" class="loading-gif">
+    </div>
+    <div id="vertical-nav" class="flex col">
+        <button class="vertical-nav-bullet" data-target="#section-01" data-content="Lire un titre"></button>
+        <button class="vertical-nav-bullet" data-target="#section-02" data-content="Lire une vidéo"></button>
+        <button class="vertical-nav-bullet" data-target="#section-03" data-content="Piloter un slider"></button>
+        <button class="vertical-nav-bullet" data-target="#section-04" data-content="Saisie vocale"></button>
+
+    </div>
+    <section id="section-01" data-index="1" class="homepage-section first">
+        <div class="section-helper">
+            Dites <strong>"Linto, lis le titre"</strong> ou <strong>"Linto, bloc suivant"</strong>
+        </div>
+        <div class="container">
+            <p id="section-01-content">Inventer des logiciels libres et Open Source éthiques pour rendre le monde meilleur</p>
+        </div>
+    </section>
+    <section id="section-02" data-index="2" class="homepage-section">
+        <div class="section-helper">
+            Dites <strong>"Linto, démarre la vidéo"</strong> OU <strong>"Linto, arrête la vidéo"</strong>
+        </div>
+        <div class="container flex col">
+            <h2>Bienvenue à LINAGORA !</h2>
+            <span>Je vous dis tout sur LINAGORA dans cette vidéo de 2 minutes !</span>
+            <div id="player"></div>
+
+            <p>Alexandre ZAPOLSKY, président et co-fondateur vous présente LINAGORA, ses produits, ses services et sa mission.</p>
+
+            <script>
+                // 2. This code loads the IFrame Player API code asynchronously.
+                var tag = document.createElement('script');
+
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                // 3. This function creates an <iframe> (and YouTube player)
+                //    after the API code downloads.
+                window.YTplayer;
+
+                function onYouTubeIframeAPIReady() {
+                    window.YTplayer = new YT.Player('player', {
+                        height: '432',
+                        width: '768',
+                        videoId: 'AOKDvuIaTdo',
+                        events: {
+                            'onReady': onPlayerReady,
+                            'onStateChange': onPlayerStateChange
+                        }
+                    });
+                }
+
+                // 4. The API will call this function when the video player is ready.
+                function onPlayerReady(event) {
+                    //event.target.playVideo();
+                }
+
+                // 5. The API calls this function when the player's state changes.
+                //    The function indicates that when playing a video (state=1),
+                //    the player should play for six seconds and then stop.
+                var done = false;
+
+                function onPlayerStateChange(event) {
+                    if (event.data == YT.PlayerState.PLAYING && !done) {
+                        setTimeout(stopVideo, 6000);
+                        done = true;
+                    }
+                }
+
+                function playVideo() {
+                    window.YTplayer.playVideo()
+                }
+
+                function stopVideo() {
+                    window.YTplayer.stopVideo();
+                }
+            </script>
+        </div>
+    </section>
+    <section id="section-03" data-index="3" class="homepage-section">
+        <div class="section-helper">Dites <strong>"Linto, diapo suivant"</strong> ou <strong>"Linto, diapo précédent"</strong></div>
+        <div class="container flex col">
+            <h2>Découvrez nos offres !</h2>
+            <div id="homepage-slider">
+                <div class="hompeage-slide flex row">
+                    <div class="flex1 flex col slider-img">
+                        <img src="/assets/img/project-linto.png">
+                    </div>
+                    <div class="flex1 flex col slider-content">
+                        <h3>Votre propre solution vocale intégrée</h3>
+                        <span>Plateforme vocale open source sécurisée</span>
+                    </div>
+                </div>
+                <div class="hompeage-slide flex row">
+                    <div class="flex1 flex col slider-img">
+                        <img src="/assets/img/twake-logo.png">
+                    </div>
+                    <div class="flex1 flex col slider-content">
+                        <h3>The Open Digital Workplace</h3>
+                        <span>Une plateforme de collaboration open source sécurisée pour améliorer l'efficacité organisationnelle</span>
+                    </div>
+                </div>
+                <div class="hompeage-slide flex row">
+                    <div class="flex1 flex col slider-img">
+                        <img src="/assets/img/logo-linshare.png">
+                    </div>
+                    <div class="flex1 flex col slider-content">
+                        <h3>Partagez en toute confiance</h3>
+                        <span>Logiciel Open Source de partage sécurisé de fichiers d'entreprise</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section-04" data-index="4" class="homepage-section">
+        <div class="section-helper">
+            Cliquez sur le bouton "micro" pour commencer une saisie vocale
+        </div>
+        <div class="container flex col">
+            <h2>Contactez-nous</h2>
+            <div class="flex col form-field">
+                <span class="label">Nom Prénom</span>
+                <div class="flex row">
+                    <span class="input flex1" id="form-name"></span>
+                    <div class="from-btn-container flex col">
+                        <button id="form-msg-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex col form-field">
+                <span class="label">Objet</span>
+                <div class="flex row">
+                    <span class="input flex1" id="form-subject"></span>
+                    <div class="from-btn-container flex col">
+                        <button id="form-msg-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex col form-field">
+                <span class="label">Message</span>
+                <div class="flex row">
+                    <span class="textarea flex1" id="form-msg"></span>
+                    <div class="from-btn-container flex col ">
+                        <button id="form-msg-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="chatbot-wrapper "></div>
+    <script type="text/javascript" src="/assets/js/main.js"></script>
+</body>
+
+</html>
