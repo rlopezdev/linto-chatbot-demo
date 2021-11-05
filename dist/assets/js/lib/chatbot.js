@@ -62,7 +62,7 @@ class ChatBot {
             }
         }
 
-  
+
 
         // First initialisation
         if (!this.chatbotEnabled) {
@@ -82,18 +82,18 @@ class ChatBot {
             </div>`
 
             this.chatbotContainer.innerHTML = jhtml
-            
+
             this.beep = new Audio('/assets/audio/beep.mp3')
             this.beep.volume = 0.1
 
-            if(this.foceMode !== null) {
-                if(this.forceMode === 'minimal-streaming'){
+            if (this.foceMode !== null) {
+                if (this.forceMode === 'minimal-streaming') {
                     this.setChatbotMinimal()
                     this.closeInitFrame()
                     this.initLintoWeb()
                     return
                 }
-                if(this.forceMode === 'multi-modal'){
+                if (this.forceMode === 'multi-modal') {
                     this.setChatbotMultiModal()
                     this.closeInitFrame()
                     this.initLintoWeb()
@@ -132,7 +132,7 @@ class ChatBot {
                 this.initLintoWeb()
             }
 
-     
+
         }
     }
     toggleInitFrame() {
@@ -828,7 +828,6 @@ class ChatBot {
                 if (this.chatbotMode !== 'multi-modal') {
                     this.hideChatbotMinimal()
                 }
-                console.log('par la ?')
             }
         }
     }
