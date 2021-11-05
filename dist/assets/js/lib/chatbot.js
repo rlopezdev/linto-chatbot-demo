@@ -3,13 +3,15 @@ class ChatBot {
         /* REQUIRED */
         this.containerId = null // reuqired
         this.lintoWebHost = '' // required
-        this.lintoWebToken = '' // required  
+        this.lintoWebToken = '' // required
+
 
         /* GLOBAL */
         this.chatbot = null
         this.chatbotEnabled = false
         this.chatbotContainer = null
         this.debug = false
+        this.forceMode = null
 
         /* STATES */
         this.streamingMode = 'vad'
@@ -55,7 +57,13 @@ class ChatBot {
             if (!!data.lintoCustomEvents) {
                 this.lintoCustomEvents = data.lintoCustomEvents
             }
+            if (!!data.forceMode) {
+                this.forceMode = data.forceMode
+            }
         }
+
+  
+
         // First initialisation
         if (!this.chatbotEnabled) {
             // HTML
@@ -74,6 +82,24 @@ class ChatBot {
             </div>`
 
             this.chatbotContainer.innerHTML = jhtml
+            
+            this.beep = new Audio('/assets/audio/beep.mp3')
+            this.beep.volume = 0.1
+
+            if(this.foceMode !== null) {
+                if(this.forceMode === 'minimal-streaming'){
+                    this.setChatbotMinimal()
+                    this.closeInitFrame()
+                    this.initLintoWeb()
+                    return
+                }
+                if(this.forceMode === 'multi-modal'){
+                    this.setChatbotMultiModal()
+                    this.closeInitFrame()
+                    this.initLintoWeb()
+                    return
+                }
+            }
 
             const initBtn = document.getElementById('linto-chatbot-init-btn')
             const closeFrameBtn = document.getElementById('init-frame-btn-close')
@@ -106,8 +132,7 @@ class ChatBot {
                 this.initLintoWeb()
             }
 
-            this.beep = new Audio('/assets/audio/beep.mp3')
-            this.beep.volume = 0.1
+     
         }
     }
     toggleInitFrame() {
@@ -803,6 +828,7 @@ class ChatBot {
                 if (this.chatbotMode !== 'multi-modal') {
                     this.hideChatbotMinimal()
                 }
+                console.log('par la ?')
             }
         }
     }

@@ -43,10 +43,6 @@
         <button class="vertical-nav-bullet" data-target="#section-02" data-content="Lire une vidéo" data-index="2"></button>
         <button class="vertical-nav-bullet" data-target="#section-03" data-content="Piloter un slider" data-index="3"></button>
         <button class="vertical-nav-bullet" data-target="#section-04" data-content="Saisie vocale" data-index="4"></button>
-
-        <button id="nextblock">NEXT</button>
-        <button id="prevblock">PREV</button>
-
     </div>
     <section id="section-01" data-index="1" class="homepage-section first">
         <div class="section-helper">
@@ -163,8 +159,9 @@
                 <span class="label">Nom Prénom</span>
                 <div class="flex row">
                     <span class="input flex1" id="form-name"></span>
-                    <div class="from-btn-container flex col">
-                        <button id="form-msg-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                    <div class="from-btn-container flex row">
+                        <button id="form-name-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                        <button class="linto-chatbot-replay hidden" data-target="form-name"><span class="icon"></span></button>
                     </div>
                 </div>
             </div>
@@ -172,8 +169,9 @@
                 <span class="label">Objet</span>
                 <div class="flex row">
                     <span class="input flex1" id="form-subject"></span>
-                    <div class="from-btn-container flex col">
-                        <button id="form-msg-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                    <div class="from-btn-container flex row">
+                        <button id="form-subject-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                        <button class="linto-chatbot-replay hidden" data-target="form-subject"><span class="icon"></span></button>
                     </div>
                 </div>
             </div>
@@ -181,14 +179,15 @@
                 <span class="label">Message</span>
                 <div class="flex row">
                     <span class="textarea flex1" id="form-msg"></span>
-                    <div class="from-btn-container flex col ">
-                        <button id="form-msg-button" class="linto-chatbot-streaming-btn"><span class="icon"></span></button>
+                    <div class="from-btn-container flex row">
+                        <button id="form-msg-button" class="linto-chatbot-streaming-btn" ><span class="icon"></span></button>
+                        <button class="linto-chatbot-replay hidden" data-target="form-msg"><span class="icon"></span></button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <div id="chatbot-wrapper "></div>
+    <div id="chatbot-wrapper"></div>
     <script type="text/javascript" src="/assets/js/main.js"></script>
 </body>
 

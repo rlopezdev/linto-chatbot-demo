@@ -1,5 +1,108 @@
 window.onload = () => {
+    
+    /* SLIDER */
+    window.homepageSlider = $('#homepage-slider')
+    window.homepageSlider.bxSlider();
 
+    window.chatbot = new ChatBot({
+        debug: true,
+        containerId: 'chatbot-wrapper',
+        lintoWebToken: 'WWBoEVova4dWLtbw', //qTw7il98QXAFaxRr
+        lintoWebHost: 'https://stage.linto.ai/overwatch/local/web/login',
+        forceMode: 'minimal-streaming',
+        lintoSayResponse: false,
+        lintoCustomEvents: [{
+            flag: 'custom_action_from_skill',
+            func: (event) => { customActionSkill(event) }
+        }, {
+            flag: 'streaming_stop',
+            func: () => { onStreamingStop() }
+        }]
+    })
+
+    
+    let customActionSkill = async(event) => {
+        
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'block_next') {
+            goToNextBlock()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'block_previous') {
+            gotToPreviousBlock()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'read_title') {
+            let currentBlock = getCurrentBlock()
+            if(currentBlock !== 1) {
+                location.hash = '#section-01'
+            }
+            let content = document.getElementById('section-01-content')
+            window.chatbot.say(content.innerHTML)
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_next') {
+            let currentBlock = getCurrentBlock()
+            if(currentBlock !== 3) {
+                location.hash = '#section-03'
+            }
+            window.homepageSlider.goToNextSlide()
+        }
+        // Slide previous
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_previous') {
+            let currentBlock = getCurrentBlock()
+            if(currentBlock !== 3) {
+                location.hash = '#section-03'
+            }
+            window.homepageSlider.goToPrevSlide()
+
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'podcast_start') {
+            window.YTplayer.playVideo()
+        }
+        if (!!event.detail && (event.detail.behavior.customAction.kind === 'podcast_pause' ||event.detail.behavior.customAction.kind === 'podcast_stop')) {
+            window.YTplayer.stopVideo()
+        }
+        console.log('wesh alors')
+        if(window.chatbot.chatbotMode === 'minimal-streaming'){
+            window.chatbot.hideChatbotMinimal()
+        }
+        if(window.chatbot.chatbotMode === 'multi-modal'){
+            window.chatbot.hideChatbotMultiModal()
+        }
+    }
+    let onStreamingStop = () => {
+        const recordBtns = document.getElementsByClassName('linto-chatbot-streaming-btn')
+        for (let btn of recordBtns) {
+            if (btn.classList.contains('streaming-on')) {
+                btn.classList.remove('streaming-on')
+                let parent = btn.parentElement
+                let btnPlay = parent.children[1]
+                let inputTarget = document.getElementById(btnPlay.getAttribute('data-target'))
+                if (inputTarget.innerHTML.length > 0) {
+                    btnPlay.classList.remove('hidden')
+                }
+                btnPlay.onclick = () => {
+                    window.chatbot.say(inputTarget.innerHTML)
+                }
+            }
+        }
+    }
+
+    const formNameBtn = document.getElementById('form-name-button')
+    formNameBtn.onclick = () =>{
+        formNameBtn.classList.add('streaming-on')
+        window.chatbot.customStreaming('vad-custom', 'form-name')
+    }
+
+    const formSubjectBtn = document.getElementById('form-subject-button')
+    formSubjectBtn.onclick = () =>{
+        formSubjectBtn.classList.add('streaming-on')
+        window.chatbot.customStreaming('vad-custom', 'form-subject')
+    }
+    const formMsgBtn = document.getElementById('form-msg-button')
+    formMsgBtn.onclick = () =>{
+        formMsgBtn.classList.add('streaming-on')
+        window.chatbot.customStreaming('infinite', 'form-msg')
+    }
+
+    
     /* RESIZE SECTIONS ONLOAD */
     let windowHeight = window.innerHeight
     let sections = document.getElementsByClassName('homepage-section')
@@ -17,9 +120,6 @@ window.onload = () => {
             location.hash = target
         }
     }
-
-    /* SLIDER */
-    $('#homepage-slider').bxSlider();
 
     /*** SECTIONS NAV ***/
     const getCurrentBlock = () => {
@@ -69,17 +169,4 @@ window.onload = () => {
             }
         }
     }
-    const nextBlockBtn = document.getElementById('nextblock')
-    const prevBlockBtn = document.getElementById('prevblock')
-    nextBlockBtn.onclick = () => {
-        goToNextBlock()
-    }
-    prevBlockBtn.onclick = () => {
-        gotToPreviousBlock()
-    }
-
-
-
-
-
 }

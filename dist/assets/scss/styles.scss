@@ -352,9 +352,11 @@ header {
         min-height: 30px;
         line-height: 30px;
         padding: 5px;
-        font-size: 22px;
+        font-size: 18px;
         width: 100%;
         background: #fff;
+        text-align: left;
+        @include boxShadow(0,2px,3px,0,rgba(0,0,0,0.3));
     }
     .textarea {
         min-height: 120px;
@@ -394,8 +396,48 @@ header {
             background-color: $red;
         }
     }
+    &.streaming-on{
+        background-color: $red;
+        .icon{
+            background-color: #fff;
+        }
+    }
 }
 
+.linto-chatbot-replay {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    margin-left: 10px;
+    padding: 0;
+    @include borderRadius(20px);
+    @include boxShadow(0,
+    2px,
+    3px,
+    0,
+    rgba(0,
+    0,
+    0,
+    0.3));
+    .icon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: $blue;
+        padding: 0;
+        margin: 0;
+        @include maskImage('../img/chatbot/play.svg');
+    }
+    &:hover {
+        .icon {
+            background-color: $red;
+        }
+    }
+    &.hidden{
+        display: none;
+    }
+}
 #coffe-machine-svg {
     width: 800px;
     height: 800px;

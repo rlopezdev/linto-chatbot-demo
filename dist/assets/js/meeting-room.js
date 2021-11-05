@@ -145,31 +145,70 @@ $(document).ready(() => {
         darkness.animate({ opacity: 0 }, 500);
     }
 
+    /* CHATBOT */
+    window.chatbot = new ChatBot({
+        debug: true,
+        containerId: 'chatbot-wrapper',
+        lintoWebToken: 'WWBoEVova4dWLtbw', //qTw7il98QXAFaxRr
+        lintoWebHost: 'https://stage.linto.ai/overwatch/local/web/login',
+        forceMode: 'minimal-streaming',
+        lintoSayResponse: false,
+        lintoCustomEvents: [{
+            flag: 'custom_action_from_skill',
+            func: (event) => { customActionSkill(event) }
+        }, {
+            flag: 'streaming_stop',
+            func: () => { onStreamingStop() }
+        }]
+    })
 
-    $('#open-shutter').click(function() {
-
-        openShutters()
-    })
-    $('#close-shutter').click(function() {
-
-        closeShutters()
-    })
-    $('#light-on').click(function() {
-        lightOn()
-    })
-    $('#light-off').click(function() {
-        lightOff()
-    })
-    $('#projector-on').click(function() {
-        projectorOn()
-    })
-    $('#projector-off').click(function() {
-        projectorOff()
-    })
-    $('#slider-prev').click(function() {
-        slidePrev()
-    })
-    $('#slider-next').click(function() {
-        slideNext()
-    })
+    let customActionSkill = async(event) => {
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'shutter_off') {
+            openShutters()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'shutter_on') {
+            closeShutters()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'light_on') {
+            lightOn()
+            }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'light_off') {
+            lightOff()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'projector_on') {
+            projectorOn()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'projector_off') {
+            projectorOff()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_next') {
+            slideNext()
+        }
+        if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_previous') {
+            slidePrev()
+        }
+        if(window.chatbot.chatbotMode === 'minimal-streaming'){
+            window.chatbot.hideChatbotMinimal()
+        }
+        if(window.chatbot.chatbotMode === 'multi-modal'){
+            window.chatbot.hideChatbotMultiModal()
+        }
+    }
+    let onStreamingStop = () => {
+        const recordBtns = document.getElementsByClassName('linto-chatbot-streaming-btn')
+        for (let btn of recordBtns) {
+            if (btn.classList.contains('streaming-on')) {
+                btn.classList.remove('streaming-on')
+                let parent = btn.parentElement
+                let btnPlay = parent.children[1]
+                let inputTarget = document.getElementById(btnPlay.getAttribute('data-target'))
+                if (inputTarget.innerHTML.length > 0) {
+                    btnPlay.classList.remove('hidden')
+                }
+                btnPlay.onclick = () => {
+                    window.chatbot.say(inputTarget.innerHTML)
+                }
+            }
+        }
+    }
 })
