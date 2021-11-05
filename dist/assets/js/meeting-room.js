@@ -69,14 +69,9 @@ $(document).ready(() => {
         const svgTarget = s.select('#' + target.attr('id'))
         const svgCurrentProj = s.select('#VIDEOPROJ-ON-' + currentSlideIndex)
         const svgTargetProj = s.select('#' + targetProj.attr('id'))
-        console.log('currentSlide', currentSlide)
-        console.log('currentProj', currentProj)
-
-        console.log('target', target)
-        console.log('targetProj', targetProj)
 
         svgCurrent.animate({ opacity: 0 }, 300, function() {
-            console.log('ALLO?')
+
             currentSlide[0].classList.remove('active')
             target[0].classList.add('active')
             currentProj[0].classList.remove('active')
@@ -95,7 +90,6 @@ $(document).ready(() => {
         const currentSlide = $('.pc-proj.active')
         const currentSlideIndex = parseInt(currentSlide.attr('data-index'));
         const currentProj = $('#VIDEOPROJ-ON-' + currentSlideIndex)
-        console.log('slider index ', currentSlideIndex)
         if (currentSlideIndex === 1) {
             target = $('.pc-proj[data-index="' + pcSlides.length + '"]')
             targetProj = $('.proj[data-index="' + pcSlides.length + '"]')
@@ -149,7 +143,7 @@ $(document).ready(() => {
     window.chatbot = new ChatBot({
         debug: true,
         containerId: 'chatbot-wrapper',
-        lintoWebToken: 'WWBoEVova4dWLtbw', //qTw7il98QXAFaxRr
+        lintoWebToken: 'KI7x8PRYUUgeps7k', //WWBoEVova4dWLtbw (local)
         lintoWebHost: 'https://stage.linto.ai/overwatch/local/web/login',
         forceMode: 'minimal-streaming',
         lintoSayResponse: false,
@@ -171,7 +165,7 @@ $(document).ready(() => {
         }
         if (!!event.detail && event.detail.behavior.customAction.kind === 'light_on') {
             lightOn()
-            }
+        }
         if (!!event.detail && event.detail.behavior.customAction.kind === 'light_off') {
             lightOff()
         }
@@ -187,10 +181,10 @@ $(document).ready(() => {
         if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_previous') {
             slidePrev()
         }
-        if(window.chatbot.chatbotMode === 'minimal-streaming'){
+        if (window.chatbot.chatbotMode === 'minimal-streaming') {
             window.chatbot.hideChatbotMinimal()
         }
-        if(window.chatbot.chatbotMode === 'multi-modal'){
+        if (window.chatbot.chatbotMode === 'multi-modal') {
             window.chatbot.hideChatbotMultiModal()
         }
     }

@@ -1,4 +1,3 @@
-
 window.onload = function() {
     var s = Snap('#coffe-machine-svg'),
         p = 100 / 30,
@@ -347,20 +346,22 @@ window.onload = function() {
     window.chatbot = new ChatBot({
         debug: true,
         containerId: 'chatbot-wrapper',
-        lintoWebToken: 'WWBoEVova4dWLtbw', //qTw7il98QXAFaxRr
+        lintoWebToken: 'KI7x8PRYUUgeps7k', //WWBoEVova4dWLtbw (local)
         lintoWebHost: 'https://stage.linto.ai/overwatch/local/web/login',
         forceMode: 'minimal-streaming',
         lintoSayResponse: false,
         lintoCustomEvents: [{
-            flag: 'custom_action_from_skill',
-            func: (event) => { customActionSkill(event) }
-        }/*, {
-            flag: 'streaming_stop',
-            func: () => { onStreamingStop() }
-        }*/]
-        })
+                flag: 'custom_action_from_skill',
+                func: (event) => { customActionSkill(event) }
+            }
+            /*, {
+                        flag: 'streaming_stop',
+                        func: () => { onStreamingStop() }
+                    }*/
+        ]
+    })
 
-        let customActionSkill = async(event) => {
+    let customActionSkill = async(event) => {
         if (!!event.detail && event.detail.behavior.customAction.kind === 'coffee_macchiato') {
             s.select("#mochiatto-area").click()
         }
@@ -377,12 +378,11 @@ window.onload = function() {
             s.select("#mocha-area").click()
         }
 
-        if(window.chatbot.chatbotMode === 'minimal-streaming'){
+        if (window.chatbot.chatbotMode === 'minimal-streaming') {
             window.chatbot.hideChatbotMinimal()
         }
-        if(window.chatbot.chatbotMode === 'multi-modal'){
+        if (window.chatbot.chatbotMode === 'multi-modal') {
             window.chatbot.hideChatbotMultiModal()
         }
     }
 }
-
