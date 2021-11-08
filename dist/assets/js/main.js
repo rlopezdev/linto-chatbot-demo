@@ -5,7 +5,7 @@ window.onload = () => {
     window.homepageSlider.bxSlider();
 
     window.chatbot = new ChatBot({
-        debug: true,
+        debug: false,
         containerId: 'chatbot-wrapper',
         lintoWebToken: 'KI7x8PRYUUgeps7k', //WWBoEVova4dWLtbw (local)
         lintoWebHost: 'https://stage.linto.ai/overwatch/local/web/login',
@@ -31,35 +31,81 @@ window.onload = () => {
         }
         if (!!event.detail && event.detail.behavior.customAction.kind === 'read_title') {
             let currentBlock = getCurrentBlock()
+            let wait = false
             if (currentBlock !== 1) {
                 location.hash = '#section-01'
+                wait = true
             }
             let content = document.getElementById('section-01-content')
-            window.chatbot.say(content.innerHTML)
+            if(wait) {
+              setTimeout(()=>{ 
+                window.chatbot.say(content.innerHTML)
+              }, 500)
+            } else {
+              window.chatbot.say(content.innerHTML)
+            }
         }
         if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_next') {
-            let currentBlock = getCurrentBlock()
-            if (currentBlock !== 3) {
-                location.hash = '#section-03'
-            }
+          let currentBlock = getCurrentBlock()
+          let wait = false
+          if (currentBlock !== 3) {
+              location.hash = '#section-03'
+              wait = true
+          }
+          if(wait){
+            setTimeout(()=>{
+              window.homepageSlider.goToNextSlide()  
+            }, 500)
+          } else {
             window.homepageSlider.goToNextSlide()
+          }
         }
-        // Slide previous
         if (!!event.detail && event.detail.behavior.customAction.kind === 'slide_previous') {
             let currentBlock = getCurrentBlock()
+            let wait = false
             if (currentBlock !== 3) {
                 location.hash = '#section-03'
+                wait = true
             }
-            window.homepageSlider.goToPrevSlide()
-
+            if(wait){
+              setTimeout(()=>{
+                window.homepageSlider.goToPrevSlide()  
+              }, 500)
+            } else {
+              window.homepageSlider.goToPrevSlide()
+            }
         }
         if (!!event.detail && event.detail.behavior.customAction.kind === 'podcast_start') {
+          let currentBlock = getCurrentBlock()
+          let wait = false
+          if (currentBlock !== 2) {
+              location.hash = '#section-02'
+              wait = true
+          }
+          if(wait){
+            setTimeout(() => {
+              window.YTplayer.playVideo()
+            }, 500);
+          } else {
             window.YTplayer.playVideo()
+          }
         }
         if (!!event.detail && (event.detail.behavior.customAction.kind === 'podcast_pause' || event.detail.behavior.customAction.kind === 'podcast_stop')) {
+          let currentBlock = getCurrentBlock()
+          let wait = false
+          if (currentBlock !== 2) {
+              location.hash = '#section-02'
+              wait = true
+          }
+          if(wait){
+            setTimeout(() => {
+              window.YTplayer.stopVideo()
+            }, 500);
+          } else {
             window.YTplayer.stopVideo()
+          }
         }
-        console.log('wesh alors')
+        
         if (window.chatbot.chatbotMode === 'minimal-streaming') {
             window.chatbot.hideChatbotMinimal()
         }

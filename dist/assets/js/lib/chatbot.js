@@ -753,7 +753,7 @@ class ChatBot {
         this.lintoRightCornerAnimation.onComplete = () => {
             this.chatbot.startStreamingPipeline()
             setTimeout(() => {
-                this.setLintoRightCornerAnimation('thinking')
+                this.setLintoRightCornerAnimation('awake')
             }, 500)
         }
     }
